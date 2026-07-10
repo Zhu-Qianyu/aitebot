@@ -1,0 +1,1226 @@
+<!doctype html> 
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aitebot | 爱特沃智能机器人俱乐部</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标（国内CDN镜像） -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <!-- 自定义Tailwind配置 -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#FF5A00", // 深圳科创学院橙色主色调
+              dark: "#111111",
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+        .text-balance {
+          text-wrap: balance;
+        }
+        .nav-scrolled {
+          @apply bg-white shadow-md;
+        }
+        .gradient-hero-1 {
+          background: linear-gradient(135deg, #ff5a00 0%, #ff8a00 50%, #ffb347 100%);
+        }
+        .gradient-hero-2 {
+          background: linear-gradient(135deg, #141e30 0%, #243b55 100%);
+        }
+        .gradient-hero-3 {
+          background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+        }
+        .gradient-card {
+          background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+      }
+    </style>
+    <style>
+      /* 基础样式重置 */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        color: #111111;
+        line-height: 1.6;
+      }
+
+      /* 导航栏滚动效果 */
+      .navbar {
+        transition: all 0.3s ease;
+      }
+
+      /* 下拉菜单样式 */
+      .nav-item:hover .submenu {
+        display: block;
+      }
+
+      .submenu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        min-width: 160px;
+        z-index: 100;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .submenu li {
+        width: 100%;
+      }
+
+      .submenu a {
+        display: block;
+        padding: 10px 16px;
+        white-space: nowrap;
+      }
+
+      .submenu a:hover {
+        background-color: #f5f5f5;
+      }
+
+      /* 轮播图样式 */
+      .hero-carousel {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.8s ease-in-out;
+      }
+
+      .slide.active {
+        opacity: 1;
+      }
+
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .carousel-overlay {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+
+      .carousel-caption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        z-index: 10;
+        width: 90%;
+      }
+
+      .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 16px;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 10;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s ease;
+      }
+
+      .carousel-btn:hover {
+        background: rgba(0, 0, 0, 0.7);
+      }
+
+      .prev-btn {
+        left: 20px;
+      }
+
+      .next-btn {
+        right: 20px;
+      }
+
+      /* 轮播指示器 */
+      .carousel-dots {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        z-index: 10;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .dot.active {
+        background: white;
+        width: 30px;
+        border-radius: 5px;
+      }
+
+      /* 卡片悬停效果 */
+      .project-card {
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .project-card:hover {
+        transform: translateY(-8px);
+        box-shadow:
+          0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
+      /* 返回顶部按钮 */
+      #topBtn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        display: none;
+        background-color: #ff5a00;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(255, 90, 0, 0.3);
+      }
+
+      #topBtn:hover {
+        background-color: #e65100;
+        transform: translateY(-2px);
+      }
+
+      /* 图片加载失败占位 */
+      .img-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(0, 0, 0, 0.2);
+        font-size: 3rem;
+      }
+    </style>
+  </head>
+  <body class="bg-white">
+    <!-- 顶部导航栏（带下拉菜单） -->
+    <nav
+      id="navbar"
+      class="navbar fixed top-0 left-0 w-full z-50 bg-transparent"
+    >
+      <div
+        class="container mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <!-- Logo -->
+        <a href="#" class="logo text-2xl font-bold text-white">
+          <span class="text-primary">Aite</span>bot
+        </a>
+
+        <!-- 桌面端导航（带下拉菜单） -->
+        <div class="hidden md:flex items-center space-x-6">
+          <div class="nav-item relative">
+            <a
+              href="#about"
+              class="text-white hover:text-primary transition-colors"
+              >关于我们</a
+            >
+            <ul class="submenu">
+              <li><a href="#about" class="text-gray-700">实验室概况</a></li>
+              <li><a href="#team" class="text-gray-700">团队介绍</a></li>
+              <li><a href="#culture" class="text-gray-700">实验室文化</a></li>
+            </ul>
+          </div>
+
+          <div class="nav-item relative">
+            <a
+              href="#projects"
+              class="text-white hover:text-primary transition-colors"
+              >在研项目</a
+            >
+            <ul class="submenu">
+              <li><a href="#projects" class="text-gray-700">工业级项目</a></li>
+              <li><a href="#projects" class="text-gray-700">科研级项目</a></li>
+              <li>
+                <a href="#projects" class="text-gray-700">技术转化级项目</a>
+              </li>
+            </ul>
+          </div>
+
+          <a
+            href="#ecosystem"
+            class="text-white hover:text-primary transition-colors"
+            >科创生态</a
+          >
+          <a
+            href="#partners"
+            class="text-white hover:text-primary transition-colors"
+            >合作平台</a
+          >
+          <a
+            href="#news"
+            class="text-white hover:text-primary transition-colors"
+            >新闻动态</a
+          >
+          <a
+            href="#contact"
+            class="text-white hover:text-primary transition-colors"
+            >联系我们</a
+          >
+        </div>
+
+        <!-- 移动端菜单按钮 -->
+        <button id="menuBtn" class="md:hidden text-white focus:outline-none">
+          <i class="fa fa-bars text-2xl"></i>
+        </button>
+      </div>
+
+      <!-- 移动端导航菜单 -->
+      <div id="mobileMenu" class="md:hidden hidden bg-white shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+          <a
+            href="#about"
+            class="text-gray-700 hover:text-primary py-2 border-b border-gray-100"
+            >关于我们</a
+          >
+          <a
+            href="#projects"
+            class="text-gray-700 hover:text-primary py-2 border-b border-gray-100"
+            >在研项目</a
+          >
+          <a
+            href="#ecosystem"
+            class="text-gray-700 hover:text-primary py-2 border-b border-gray-100"
+            >科创生态</a
+          >
+          <a
+            href="#partners"
+            class="text-gray-700 hover:text-primary py-2 border-b border-gray-100"
+            >合作平台</a
+          >
+          <a
+            href="#news"
+            class="text-gray-700 hover:text-primary py-2 border-b border-gray-100"
+            >新闻动态</a
+          >
+          <a href="#contact" class="text-gray-700 hover:text-primary py-2"
+            >联系我们</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- 英雄区（自动轮播图） -->
+    <section class="hero-carousel">
+      <!-- 轮播图1 -->
+      <div class="slide active gradient-hero-1">
+        <img
+          src="https://picsum.photos/1920/1080?robot1"
+          alt="爱特沃智能机器人"
+          onerror="this.style.display='none'"
+        />
+        <div class="carousel-overlay"></div>
+      </div>
+
+      <!-- 轮播图2 -->
+      <div class="slide gradient-hero-2">
+        <img
+          src="https://picsum.photos/1920/1080?construction"
+          alt="筑墙智匠建筑机器人"
+          onerror="this.style.display='none'"
+        />
+        <div class="carousel-overlay"></div>
+      </div>
+
+      <!-- 轮播图3 -->
+      <div class="slide gradient-hero-3">
+        <img
+          src="https://picsum.photos/1920/1080?ai"
+          alt="人工智能与具身智能"
+          onerror="this.style.display='none'"
+        />
+        <div class="carousel-overlay"></div>
+      </div>
+
+      <!-- 轮播文字 -->
+      <div class="carousel-caption">
+        <h1 class="text-[clamp(3rem,8vw,6rem)] font-bold mb-6 leading-tight">
+          爱特沃智能机器人俱乐部
+        </h1>
+        <p
+          class="text-[clamp(1.2rem,3vw,1.8rem)] text-white/90 mb-12 max-w-3xl mx-auto text-balance"
+        >
+          技术创新 · 场景落地 · 产业赋能
+        </p>
+        <a
+          href="#about"
+          class="inline-block bg-primary hover:bg-primary/90 text-white font-medium px-8 py-3 rounded transition-colors"
+        >
+          了解更多
+        </a>
+      </div>
+
+      <!-- 轮播控制按钮 -->
+      <button class="carousel-btn prev-btn" onclick="prevSlide()">
+        <i class="fa fa-chevron-left"></i>
+      </button>
+      <button class="carousel-btn next-btn" onclick="nextSlide()">
+        <i class="fa fa-chevron-right"></i>
+      </button>
+
+      <!-- 轮播指示器 -->
+      <div class="carousel-dots">
+        <div class="dot active" onclick="goToSlide(0)"></div>
+        <div class="dot" onclick="goToSlide(1)"></div>
+        <div class="dot" onclick="goToSlide(2)"></div>
+      </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section id="about" class="py-24 bg-white">
+      <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-[clamp(2rem,5vw,3.5rem)] font-bold mb-12">
+            关于爱特沃
+          </h2>
+
+          <div class="space-y-8 text-lg text-gray-700">
+            <p>
+              爱特沃智能机器人实验室核心聚焦智能机器人、人工智能、低空经济三大核心领域，围绕硬件设计、嵌入式开发、算法控制、交互设计、视觉传达全技术栈开展技术攻关、创新实践与成果转化。
+            </p>
+            <p>
+              以"技术创新+场景落地+产业赋能"为核心逻辑，依托武汉理工大学科研平台、重点实验室与校企合作资源，打造集科研训练、技术研发、创业实践、产业落地于一体的科创平台。
+            </p>
+            <p>
+              搭建了工业级、科研级、宣传与技术积累级、快消级金字塔项目体系，建立了百平校企联合机器人研发实验室，组建了30+成员的稳定本硕研发团队。
+            </p>
+          </div>
+
+          <!-- 核心数据 -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20">
+            <div class="text-center">
+              <div class="text-4xl md:text-5xl font-bold text-primary mb-2">
+                6
+              </div>
+              <p class="text-gray-600">在研项目</p>
+            </div>
+            <div class="text-center">
+              <div class="text-4xl md:text-5xl font-bold text-primary mb-2">
+                35
+              </div>
+              <p class="text-gray-600">团队成员</p>
+            </div>
+            <div class="text-center">
+              <div class="text-4xl md:text-5xl font-bold text-primary mb-2">
+                5
+              </div>
+              <p class="text-gray-600">职能部门</p>
+            </div>
+            <div class="text-center">
+              <div class="text-4xl md:text-5xl font-bold text-primary mb-2">
+                26
+              </div>
+              <p class="text-gray-600">技术人员</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 项目体系介绍 -->
+    <section class="py-24 bg-gray-100">
+      <div class="container mx-auto px-6">
+        <h2 class="text-[clamp(2rem,5vw,3.5rem)] font-bold mb-16 text-center">
+          四级项目体系
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- 工业级 -->
+          <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+            <div
+              class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6"
+            >
+              <i class="fa fa-industry text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4">工业级</h3>
+            <p class="text-gray-600">
+              聚焦工业、公共服务与商用核心场景，以破解行业实际痛点为导向，兼顾工程实用性、系统稳定性与规模化落地能力。
+            </p>
+          </div>
+
+          <!-- 科研级 -->
+          <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+            <div
+              class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6"
+            >
+              <i class="fa fa-flask text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4">科研级</h3>
+            <p class="text-gray-600">
+              聚焦人工智能与机器人前沿技术研究，突破关键算法、环境感知、运动控制等核心瓶颈，提供理论支撑与技术储备。
+            </p>
+          </div>
+
+          <!-- 热度与技术积累级 -->
+          <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+            <div
+              class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6"
+            >
+              <i class="fa fa-rocket text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4">热度与技术积累级</h3>
+            <p class="text-gray-600">
+              紧跟具身智能、仿生交互等技术与市场热点，面向家庭消费与泛娱乐场景，快速迭代技术，优化用户体验。
+            </p>
+          </div>
+
+          <!-- 技术转化级 -->
+          <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+            <div
+              class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6"
+            >
+              <i class="fa fa-exchange text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4">技术转化级</h3>
+            <p class="text-gray-600">
+              以"科研成果→产品原型→市场落地"为核心路径，强调技术的工程化、产品化与商业化适配。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 在研项目 -->
+    <section id="projects" class="py-24 bg-white">
+      <div class="container mx-auto px-6">
+        <h2 class="text-[clamp(2rem,5vw,3.5rem)] font-bold mb-16">在研项目</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- 项目卡片1 -->
+          <div
+            class="project-card bg-white rounded-lg overflow-hidden shadow-md"
+          >
+            <div class="h-64 gradient-card">
+              <img
+                src="https://picsum.photos/600/400?construction"
+                alt="筑墙智匠"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+              <div class="img-placeholder">
+                <i class="fa fa-building"></i>
+              </div>
+            </div>
+            <div class="p-6">
+              <span
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-3 py-1 rounded-full mb-4"
+                >工业级</span
+              >
+              <h3 class="text-xl font-bold mb-2">筑墙智匠</h3>
+              <p class="text-gray-600 mb-4">
+                智能小型3D打印建筑机器人，可进入绝大部分建筑开展施工，最高可打印3米高墙体。
+              </p>
+              <a href="#" class="text-primary font-medium hover:underline"
+                >了解详情 →</a
+              >
+            </div>
+          </div>
+
+          <!-- 项目卡片2 -->
+          <div
+            class="project-card bg-white rounded-lg overflow-hidden shadow-md"
+          >
+            <div class="h-64 gradient-card">
+              <img
+                src="https://picsum.photos/600/400?robot"
+                alt="Mr.handy"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+              <div class="img-placeholder">
+                <i class="fa fa-android"></i>
+              </div>
+            </div>
+            <div class="p-6">
+              <span
+                class="inline-block bg-blue-100 text-blue-600 text-xs font-medium px-3 py-1 rounded-full mb-4"
+                >热度与技术积累级</span
+              >
+              <h3 class="text-xl font-bold mb-2">Mr.handy</h3>
+              <p class="text-gray-600 mb-4">
+                家用机器人及遥操作系统，自主开发高稳定性底盘与三指机械手，创新远程遥控家务工作流。
+              </p>
+              <a href="#" class="text-primary font-medium hover:underline"
+                >了解详情 →</a
+              >
+            </div>
+          </div>
+
+          <!-- 项目卡片3 -->
+          <div
+            class="project-card bg-white rounded-lg overflow-hidden shadow-md"
+          >
+            <div class="h-64 gradient-card">
+              <img
+                src="https://picsum.photos/600/400?data"
+                alt="Aapex数据采集"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+              <div class="img-placeholder">
+                <i class="fa fa-database"></i>
+              </div>
+            </div>
+            <div class="p-6">
+              <span
+                class="inline-block bg-green-100 text-green-600 text-xs font-medium px-3 py-1 rounded-full mb-4"
+                >科研级</span
+              >
+              <h3 class="text-xl font-bold mb-2">Aapex数据采集</h3>
+              <p class="text-gray-600 mb-4">
+                多模态EGO具身智能数据解决方案，打造标准化、高效化的Ego数据服务体系。
+              </p>
+              <a href="#" class="text-primary font-medium hover:underline"
+                >了解详情 →</a
+              >
+            </div>
+          </div>
+
+          <!-- 项目卡片4 -->
+          <div
+            class="project-card bg-white rounded-lg overflow-hidden shadow-md"
+          >
+            <div class="h-64 gradient-card">
+              <img
+                src="https://picsum.photos/600/400?cat"
+                alt="猫卡努"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+              <div class="img-placeholder">
+                <i class="fa fa-paw"></i>
+              </div>
+            </div>
+            <div class="p-6">
+              <span
+                class="inline-block bg-purple-100 text-purple-600 text-xs font-medium px-3 py-1 rounded-full mb-4"
+                >技术转化级</span
+              >
+              <h3 class="text-xl font-bold mb-2">猫卡努</h3>
+              <p class="text-gray-600 mb-4">
+                AI仿生陪护机，集萌趣交互、智能陪伴、全屋远程视觉监控于一体的家用轻量化机器人。
+              </p>
+              <a href="#" class="text-primary font-medium hover:underline"
+                >了解详情 →</a
+              >
+            </div>
+          </div>
+
+          <!-- 项目卡片5 -->
+          <div
+            class="project-card bg-white rounded-lg overflow-hidden shadow-md"
+          >
+            <div class="h-64 gradient-card">
+              <img
+                src="https://picsum.photos/600/400?library"
+                alt="智能图书管理机器人"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+              <div class="img-placeholder">
+                <i class="fa fa-book"></i>
+              </div>
+            </div>
+            <div class="p-6">
+              <span
+                class="inline-block bg-purple-100 text-purple-600 text-xs font-medium px-3 py-1 rounded-full mb-4"
+                >技术转化级</span
+              >
+              <h3 class="text-xl font-bold mb-2">智能图书管理机器人</h3>
+              <p class="text-gray-600 mb-4">
+                具备错架图书检测、识别和整理功能，可精准定位错架书籍并通过机械臂取出归位。
+              </p>
+              <a href="#" class="text-primary font-medium hover:underline"
+                >了解详情 →</a
+              >
+            </div>
+          </div>
+
+          <!-- 项目卡片6 -->
+          <div
+            class="project-card bg-white rounded-lg overflow-hidden shadow-md"
+          >
+            <div class="h-64 gradient-card">
+              <img
+                src="https://picsum.photos/600/400?laundry"
+                alt="洗衣机器手"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+              <div class="img-placeholder">
+                <i class="fa fa-tint"></i>
+              </div>
+            </div>
+            <div class="p-6">
+              <span
+                class="inline-block bg-purple-100 text-purple-600 text-xs font-medium px-3 py-1 rounded-full mb-4"
+                >技术转化级</span
+              >
+              <h3 class="text-xl font-bold mb-2">洗衣机器手</h3>
+              <p class="text-gray-600 mb-4">
+                洗衣烘干一体智能管理外接框架，实现对洗衣、烘干设备的统一接入与自动化控制。
+              </p>
+              <a href="#" class="text-primary font-medium hover:underline"
+                >了解详情 →</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 科创生态 -->
+    <section id="ecosystem" class="py-24 bg-gray-100">
+      <div class="container mx-auto px-6">
+        <h2 class="text-[clamp(2rem,5vw,3.5rem)] font-bold mb-16">科创生态</h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h3 class="text-2xl font-bold mb-6">我们的优势</h3>
+            <div class="space-y-6">
+              <div class="flex">
+                <div
+                  class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4"
+                >
+                  <i class="fa fa-university text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="text-lg font-semibold mb-2">高校科研平台</h4>
+                  <p class="text-gray-600">
+                    依托武汉理工大学多学科优势，与机电学院、信息学院、材料学院等深度合作。
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex">
+                <div
+                  class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4"
+                >
+                  <i class="fa fa-handshake-o text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="text-lg font-semibold mb-2">校企联合资源</h4>
+                  <p class="text-gray-600">
+                    与中建三局、苏州仁帮集团等企业建立合作，打通技术研发与产业落地通道。
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex">
+                <div
+                  class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4"
+                >
+                  <i class="fa fa-users text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="text-lg font-semibold mb-2">完整人才体系</h4>
+                  <p class="text-gray-600">
+                    覆盖硬件、软件、算法、设计、运营全链条，形成稳定的本硕研发团队。
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex">
+                <div
+                  class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4"
+                >
+                  <i class="fa fa-lightbulb-o text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="text-lg font-semibold mb-2">全技术栈能力</h4>
+                  <p class="text-gray-600">
+                    掌握硬件设计、嵌入式开发、算法控制、交互设计、视觉传达全技术栈。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white p-8 rounded-lg shadow-md">
+            <h3 class="text-2xl font-bold mb-6">我们的使命</h3>
+            <blockquote
+              class="text-lg text-gray-700 italic border-l-4 border-primary pl-4 leading-relaxed"
+            >
+              "基于高校平台快速产品迭代研发，链接企业资源走向市场完成商业闭环，打造中国硬科技创新创业的生力军。"
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 合作平台 -->
+    <section id="partners" class="py-24 bg-white">
+      <div class="container mx-auto px-6">
+        <h2 class="text-[clamp(2rem,5vw,3.5rem)] font-bold mb-16">合作平台</h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div
+            class="h-24 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200 transition-colors"
+          >
+            <span class="text-gray-500 font-medium">武汉理工大学</span>
+          </div>
+          <div
+            class="h-24 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200 transition-colors"
+          >
+            <span class="text-gray-500 font-medium">中建三局科创</span>
+          </div>
+          <div
+            class="h-24 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200 transition-colors"
+          >
+            <span class="text-gray-500 font-medium">深研studio</span>
+          </div>
+          <div
+            class="h-24 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200 transition-colors"
+          >
+            <span class="text-gray-500 font-medium">苏州仁帮集团</span>
+          </div>
+          <div
+            class="h-24 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200 transition-colors"
+          >
+            <span class="text-gray-500 font-medium">更多合作单位</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 新闻动态 -->
+    <section id="news" class="py-24 bg-gray-100">
+      <div class="container mx-auto px-6">
+        <h2 class="text-[clamp(2rem,5vw,3.5rem)] font-bold mb-16">新闻动态</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- 新闻卡片1 -->
+          <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+            <div class="h-48 gradient-card">
+              <img
+                src="https://picsum.photos/600/300?news1"
+                alt="新闻图片"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+              <div class="img-placeholder text-2xl">
+                <i class="fa fa-newspaper-o"></i>
+              </div>
+            </div>
+            <div class="p-6">
+              <p class="text-gray-500 text-sm mb-2">2026-04-08</p>
+              <h3 class="text-xl font-bold mb-3">
+                爱特沃实验室项目手册正式发布
+              </h3>
+              <p class="text-gray-600 mb-4">
+                实验室发布最新项目手册，全面介绍实验室定位、组织架构与在研项目情况。
+              </p>
+              <a href="#" class="text-primary font-medium hover:underline"
+                >阅读全文 →</a
+              >
+            </div>
+          </div>
+
+          <!-- 新闻卡片2 -->
+          <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+            <div class="h-48 gradient-card">
+              <img
+                src="https://picsum.photos/600/300?news2"
+                alt="新闻图片"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+              <div class="img-placeholder text-2xl">
+                <i class="fa fa-rocket"></i>
+              </div>
+            </div>
+            <div class="p-6">
+              <p class="text-gray-500 text-sm mb-2">2026-04-01</p>
+              <h3 class="text-xl font-bold mb-3">
+                猫卡努AI仿生陪护机项目正式启动
+              </h3>
+              <p class="text-gray-600 mb-4">
+                依托武汉理工大学机电学院与艺设学院，打造高颜值、高智能的家庭智能终端产品。
+              </p>
+              <a href="#" class="text-primary font-medium hover:underline"
+                >阅读全文 →</a
+              >
+            </div>
+          </div>
+
+          <!-- 新闻卡片3 -->
+          <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+            <div class="h-48 gradient-card">
+              <img
+                src="https://picsum.photos/600/300?news3"
+                alt="新闻图片"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+              <div class="img-placeholder text-2xl">
+                <i class="fa fa-cogs"></i>
+              </div>
+            </div>
+            <div class="p-6">
+              <p class="text-gray-500 text-sm mb-2">2025-11-30</p>
+              <h3 class="text-xl font-bold mb-3">Mr.handy家用机器人项目立项</h3>
+              <p class="text-gray-600 mb-4">
+                瞄准具身智能风口，致力于打造武汉理工大学第一台全尺寸家用机器人。
+              </p>
+              <a href="#" class="text-primary font-medium hover:underline"
+                >阅读全文 →</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-12">
+          <a
+            href="#"
+            class="inline-block border border-primary text-primary hover:bg-primary hover:text-white font-medium px-6 py-2 rounded transition-colors"
+          >
+            查看更多新闻
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="py-24 bg-dark text-white">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div>
+            <h2 class="text-[clamp(2rem,5vw,3.5rem)] font-bold mb-8">
+              联系我们
+            </h2>
+            <p class="text-gray-300 mb-8 max-w-lg">
+              如果您对我们的项目感兴趣，或希望与我们开展合作，欢迎通过以下方式联系我们。
+            </p>
+
+            <div class="space-y-6">
+              <div class="flex items-center">
+                <i
+                  class="fa fa-map-marker text-primary text-xl mr-4 w-6 text-center"
+                ></i>
+                <span>湖北省武汉市洪山区武汉理工大学</span>
+              </div>
+              <div class="flex items-center">
+                <i
+                  class="fa fa-envelope text-primary text-xl mr-4 w-6 text-center"
+                ></i>
+                <span>zhuqianyu@aitebot.cn</span>
+              </div>
+              <div class="flex items-center">
+                <i
+                  class="fa fa-phone text-primary text-xl mr-4 w-6 text-center"
+                ></i>
+                <span>15623173558</span>
+              </div>
+            </div>
+
+            <div class="mt-12 flex space-x-6">
+              <a
+                href="#"
+                class="text-gray-300 hover:text-primary text-2xl transition-colors"
+              >
+                <i class="fa fa-weixin"></i>
+              </a>
+              <a
+                href="#"
+                class="text-gray-300 hover:text-primary text-2xl transition-colors"
+              >
+                <i class="fa fa-weibo"></i>
+              </a>
+              <a
+                href="#"
+                class="text-gray-300 hover:text-primary text-2xl transition-colors"
+              >
+                <i class="fa fa-github"></i>
+              </a>
+              <a
+                href="#"
+                class="text-gray-300 hover:text-primary text-2xl transition-colors"
+              >
+                <i class="fa fa-bilibili"></i>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <form id="contactForm" class="space-y-6">
+              <div>
+                <label for="name" class="block text-gray-300 mb-2">姓名</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
+                  placeholder="请输入您的姓名"
+                />
+              </div>
+              <div>
+                <label for="email" class="block text-gray-300 mb-2">邮箱</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
+                  placeholder="请输入您的邮箱"
+                />
+              </div>
+              <div>
+                <label for="message" class="block text-gray-300 mb-2"
+                  >留言</label
+                >
+                <textarea
+                  id="message"
+                  rows="4"
+                  class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors resize-none"
+                  placeholder="请输入您的留言内容"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded transition-colors w-full md:w-auto"
+              >
+                发送消息
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-black text-gray-400 py-8">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-6 md:mb-0">
+            <a href="#" class="text-2xl font-bold text-white">
+              <span class="text-primary">Aite</span>bot
+            </a>
+            <p class="mt-2">爱特沃智能机器人有限公司</p>
+          </div>
+
+          <div class="text-center md:text-right">
+            <p>© 2026 Aitebot. All rights reserved.</p>
+            <p class="mt-1">鄂ICP备XXXXXXXX号</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button id="topBtn" onclick="scrollToTop()" aria-label="返回顶部">
+      <i class="fa fa-chevron-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+      // 轮播图功能
+      let slideIndex = 0;
+      const slides = document.querySelectorAll(".slide");
+      const dots = document.querySelectorAll(".dot");
+      const totalSlides = slides.length;
+
+      // 显示指定幻灯片
+      function showSlide(index) {
+        slides.forEach((s, i) => {
+          s.classList.remove("active");
+          dots[i].classList.remove("active");
+          if (i === index) {
+            s.classList.add("active");
+            dots[i].classList.add("active");
+          }
+        });
+      }
+
+      function nextSlide() {
+        slideIndex = (slideIndex + 1) % totalSlides;
+        showSlide(slideIndex);
+      }
+
+      function prevSlide() {
+        slideIndex = (slideIndex - 1 + totalSlides) % totalSlides;
+        showSlide(slideIndex);
+      }
+
+      function goToSlide(index) {
+        slideIndex = index;
+        showSlide(slideIndex);
+      }
+
+      // 自动播放（5秒切换一次）
+      let carouselTimer = setInterval(nextSlide, 5000);
+
+      // 鼠标悬停暂停轮播
+      document.querySelector(".hero-carousel").addEventListener("mouseenter", () => {
+        clearInterval(carouselTimer);
+      });
+      document.querySelector(".hero-carousel").addEventListener("mouseleave", () => {
+        carouselTimer = setInterval(nextSlide, 5000);
+      });
+
+      // 导航栏滚动效果
+      window.addEventListener("scroll", function () {
+        const navbar = document.getElementById("navbar");
+        const logo = navbar.querySelector(".logo");
+        const navLinks = navbar.querySelectorAll(".nav-item > a");
+
+        if (window.scrollY > 50) {
+          navbar.classList.add("nav-scrolled");
+          logo.classList.remove("text-white");
+          logo.classList.add("text-dark");
+          navLinks.forEach((link) => {
+            link.classList.remove("text-white");
+            link.classList.add("text-gray-700");
+          });
+        } else {
+          navbar.classList.remove("nav-scrolled");
+          logo.classList.remove("text-dark");
+          logo.classList.add("text-white");
+          navLinks.forEach((link) => {
+            link.classList.remove("text-gray-700");
+            link.classList.add("text-white");
+          });
+        }
+      });
+
+      // 移动端菜单切换
+      document.getElementById("menuBtn").addEventListener("click", function () {
+        const mobileMenu = document.getElementById("mobileMenu");
+        mobileMenu.classList.toggle("hidden");
+        const icon = this.querySelector("i");
+        if (mobileMenu.classList.contains("hidden")) {
+          icon.classList.remove("fa-times");
+          icon.classList.add("fa-bars");
+        } else {
+          icon.classList.remove("fa-bars");
+          icon.classList.add("fa-times");
+        }
+      });
+
+      // 点击移动端菜单链接后关闭菜单
+      document.querySelectorAll("#mobileMenu a").forEach((link) => {
+        link.addEventListener("click", function () {
+          document.getElementById("mobileMenu").classList.add("hidden");
+          document.querySelector("#menuBtn i").classList.remove("fa-times");
+          document.querySelector("#menuBtn i").classList.add("fa-bars");
+        });
+      });
+
+      // 平滑滚动到锚点
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          const targetId = this.getAttribute("href");
+          if (targetId === "#") return;
+
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+
+      // 返回顶部功能
+      window.onscroll = function () {
+        const btn = document.getElementById("topBtn");
+        if (
+          document.body.scrollTop > 300 ||
+          document.documentElement.scrollTop > 300
+        ) {
+          btn.style.display = "block";
+        } else {
+          btn.style.display = "none";
+        }
+      };
+
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // 联系表单验证
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const name = document.getElementById("name").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const message = document.getElementById("message").value.trim();
+
+          if (!name || !email || !message) {
+            alert("请填写所有字段！");
+            return;
+          }
+
+          alert("感谢您的提交，我们会尽快与您联系。");
+          this.reset();
+        });
+    </script>
+  </body>
+</html>
