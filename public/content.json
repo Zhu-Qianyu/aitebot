@@ -1,0 +1,318 @@
+{
+  "zh": {
+    "ui": {
+      "pageTitle": "Aitebot | 爱特沃机器人俱乐部",
+      "navAbout": "关于我们",
+      "navAboutLab": "实验室概况",
+      "navAboutTeam": "团队介绍",
+      "navAboutCulture": "实验室文化",
+      "navProjects": "我们的工作",
+      "navProjectsIndustrial": "工业级项目",
+      "navProjectsResearch": "科研级项目",
+      "navProjectsTransfer": "技术转化级项目",
+      "navEcosystem": "科创生态",
+      "navPartners": "合作平台",
+      "navNews": "新闻动态",
+      "navContact": "联系我们",
+      "aboutTitle": "关于爱特沃",
+      "aboutP1": "爱特沃智能机器人实验室核心聚焦智能机器人、人工智能、低空经济三大核心领域，围绕硬件设计、嵌入式开发、算法控制、交互设计、视觉传达全技术栈开展技术攻关、创新实践与成果转化。",
+      "aboutP2": "以\"技术创新+场景落地+产业赋能\"为核心逻辑，依托武汉理工大学科研平台、重点实验室与校企合作资源，打造集科研训练、技术研发、创业实践、产业落地于一体的科创平台。",
+      "statProjects": "我们的工作",
+      "statMembers": "团队成员",
+      "statDepts": "职能部门",
+      "statTech": "技术人员",
+      "projectsTitle": "我们的工作",
+      "projectDetail": "了解详情 →",
+      "ecosystemTitle": "科创生态",
+      "advantagesTitle": "我们的优势",
+      "adv2Title": "真实企业合作",
+      "adv2Desc": "与中建三局科创、苏州仁帮集团等企业建立合作，打通技术研发与产业落地通道。",
+      "adv3Title": "完整人才体系",
+      "adv3Desc": "覆盖硬件、软件、算法、设计、运营全链条，形成稳定的本硕研发团队。",
+      "adv4Title": "全技术栈能力",
+      "adv4Desc": "掌握硬件设计、嵌入式开发、算法控制、交互设计、视觉传达全技术栈。",
+      "missionTitle": "我们的使命",
+      "missionQuote": "\"基于高校平台快速产品迭代研发，链接企业资源走向市场完成商业闭环，打造中国硬科技创新创业的生力军。\"",
+      "partnersTitle": "合作平台",
+      "partnerWut": "武汉理工大学",
+      "partnerCscec": "中建三局科创",
+      "partnerShenyan": "深研studio",
+      "partnerRenbang": "苏州仁帮集团",
+      "partnerMore": "更多合作单位",
+      "newsTitle": "新闻动态",
+      "newsMore": "查看更多新闻",
+      "newsReadMore": "阅读全文 →",
+      "contactTitle": "联系我们",
+      "contactDesc": "如果您对我们的项目感兴趣，或希望与我们开展合作，欢迎通过以下方式联系我们。",
+      "contactAddress": "湖北省武汉市洪山区武汉理工大学",
+      "contactName": "姓名",
+      "contactEmail": "邮箱",
+      "contactMessage": "留言",
+      "contactNamePh": "请输入您的姓名",
+      "contactEmailPh": "请输入您的邮箱",
+      "contactMessagePh": "请输入您的留言内容",
+      "contactSend": "发送消息",
+      "footerCompany": "爱特沃智能机器人有限公司",
+      "footerIcp": "鄂ICP备XXXXXXXX号",
+      "formRequired": "请填写所有字段！",
+      "formThanks": "感谢您的提交，我们会尽快与您联系。",
+      "loadErrorTitle": "内容加载失败",
+      "loadErrorDesc": "请检查 public/content.json 是否存在",
+      "langSwitch": "EN"
+    },
+    "hero": {
+      "title": "爱特沃机器人俱乐部",
+      "subtitle": "技术创新 · 场景落地 · 产业赋能",
+      "ctaText": "了解更多",
+      "ctaHref": "#about",
+      "slides": [
+        {
+          "image": "./files/0000.jpg",
+          "alt": "爱特沃智能机器人",
+          "gradient": "gradient-hero-1"
+        },
+        {
+          "image": "./files/0001.jpg",
+          "alt": "筑墙智匠建筑机器人",
+          "gradient": "gradient-hero-2"
+        },
+        {
+          "image": "./files/0002.jpg",
+          "alt": "人工智能与具身智能",
+          "gradient": "gradient-hero-3"
+        }
+      ]
+    },
+    "projects": [
+      {
+        "image": "./files/0101.jpg",
+        "icon": "fa-building",
+        "tag": "主要项目",
+        "tagClass": "bg-primary/10 text-primary",
+        "title": "筑墙智匠 Artwall v1.0",
+        "description": "小型混凝土3D打印建筑机器人，利用数字孪生虚拟准轴技术实现无轨多机协同混凝土3D打印可进入绝大部分建筑开展施工，最高可打印3米高墙体。",
+        "link": "#"
+      },
+      {
+        "image": "./files/0201.jpg",
+        "icon": "fa-android",
+        "tag": "主要项目",
+        "tagClass": "bg-blue-100 text-blue-600",
+        "title": "智能农夫 Mr.handy",
+        "description": "农业具身智能机器人，可进行农业巡检，作物采摘，病虫害防治，模块搭载多样，适用于多种农业场景",
+        "link": "#"
+      },
+      {
+        "image": "https://picsum.photos/600/400?cat",
+        "icon": "fa-paw",
+        "tag": "技术转化级",
+        "tagClass": "bg-purple-100 text-purple-600",
+        "title": "猫卡努",
+        "description": "AI仿生陪护机，集萌趣交互、智能陪伴、全屋远程视觉监控于一体的家用轻量化机器人。",
+        "link": "#"
+      },
+      {
+        "image": "https://picsum.photos/600/400?library",
+        "icon": "fa-book",
+        "tag": "技术转化级",
+        "tagClass": "bg-purple-100 text-purple-600",
+        "title": "智能图书管理机器人",
+        "description": "具备错架图书检测、识别和整理功能，可精准定位错架书籍并通过机械臂取出归位。",
+        "link": "#"
+      },
+      {
+        "image": "https://picsum.photos/600/400?laundry",
+        "icon": "fa-tint",
+        "tag": "技术转化级",
+        "tagClass": "bg-purple-100 text-purple-600",
+        "title": "洗衣机器手",
+        "description": "洗衣烘干一体智能管理外接框架，实现对洗衣、烘干设备的统一接入与自动化控制。",
+        "link": "#"
+      }
+    ],
+    "news": [
+      {
+        "image": "https://picsum.photos/600/300?news1",
+        "icon": "fa-newspaper-o",
+        "date": "2026-04-08",
+        "title": "爱特沃实验室项目手册正式发布",
+        "summary": "实验室发布最新项目手册，全面介绍实验室定位、组织架构与在研项目情况。",
+        "link": "#"
+      },
+      {
+        "image": "https://picsum.photos/600/300?news2",
+        "icon": "fa-rocket",
+        "date": "2026-04-01",
+        "title": "猫卡努AI仿生陪护机项目正式启动",
+        "summary": "依托武汉理工大学机电学院与艺设学院，打造高颜值、高智能的家庭智能终端产品。",
+        "link": "#"
+      },
+      {
+        "image": "https://picsum.photos/600/300?news3",
+        "icon": "fa-cogs",
+        "date": "2025-11-30",
+        "title": "Mr.handy家用机器人项目立项",
+        "summary": "瞄准具身智能风口，致力于打造武汉理工大学第一台全尺寸家用机器人。",
+        "link": "#"
+      }
+    ]
+  },
+  "en": {
+    "ui": {
+      "pageTitle": "Aitebot | Robotics Club",
+      "navAbout": "About",
+      "navAboutLab": "Lab Overview",
+      "navAboutTeam": "Team",
+      "navAboutCulture": "Culture",
+      "navProjects": "Our Work",
+      "navProjectsIndustrial": "Industrial",
+      "navProjectsResearch": "Research",
+      "navProjectsTransfer": "Tech Transfer",
+      "navEcosystem": "Ecosystem",
+      "navPartners": "Partners",
+      "navNews": "News",
+      "navContact": "Contact",
+      "aboutTitle": "About Aitebot",
+      "aboutP1": "Aitebot Intelligent Robotics Lab focuses on intelligent robots, artificial intelligence, and the low-altitude economy. We advance R&D and commercialization across hardware design, embedded systems, control algorithms, interaction design, and visual communication.",
+      "aboutP2": "Guided by \"technology innovation + real-world deployment + industry empowerment,\" we leverage Wuhan University of Technology research platforms, key labs, and industry partnerships to build a hub for research training, product development, entrepreneurship, and commercialization.",
+      "statProjects": "Our Work",
+      "statMembers": "Team Members",
+      "statDepts": "Departments",
+      "statTech": "Engineers",
+      "projectsTitle": "Our Work",
+      "projectDetail": "Learn more →",
+      "ecosystemTitle": "Innovation Ecosystem",
+      "advantagesTitle": "Our Strengths",
+      "adv2Title": "Real Enterprise Partnerships",
+      "adv2Desc": "Partnering with CSCEC Third Bureau Sci-Tech, Suzhou Renbang Group, and others to connect R&D with industry deployment.",
+      "adv3Title": "Complete Talent Pipeline",
+      "adv3Desc": "Covering hardware, software, algorithms, design, and operations—forming a stable undergraduate–graduate R&D team.",
+      "adv4Title": "Full-Stack Capability",
+      "adv4Desc": "Mastering hardware design, embedded development, control algorithms, interaction design, and visual communication.",
+      "missionTitle": "Our Mission",
+      "missionQuote": "\"Rapid product iteration on a university platform, linking enterprise resources to close the commercial loop—building a new force for China’s hard-tech innovation.\"",
+      "partnersTitle": "Partners",
+      "partnerWut": "Wuhan University of Technology",
+      "partnerCscec": "CSCEC Third Bureau Sci-Tech",
+      "partnerShenyan": "Shenyan Studio",
+      "partnerRenbang": "Suzhou Renbang Group",
+      "partnerMore": "More Partners",
+      "newsTitle": "News",
+      "newsMore": "View more news",
+      "newsReadMore": "Read more →",
+      "contactTitle": "Contact Us",
+      "contactDesc": "Interested in our projects or looking to collaborate? Reach out through the channels below.",
+      "contactAddress": "Wuhan University of Technology, Hongshan District, Wuhan, Hubei, China",
+      "contactName": "Name",
+      "contactEmail": "Email",
+      "contactMessage": "Message",
+      "contactNamePh": "Enter your name",
+      "contactEmailPh": "Enter your email",
+      "contactMessagePh": "Enter your message",
+      "contactSend": "Send Message",
+      "footerCompany": "Aitebot Intelligent Robotics Co., Ltd.",
+      "footerIcp": "ICP License XXXXXXXX",
+      "formRequired": "Please fill in all fields!",
+      "formThanks": "Thanks for your message. We will get back to you soon.",
+      "loadErrorTitle": "Failed to load content",
+      "loadErrorDesc": "Please check that public/content.json exists",
+      "langSwitch": "中文"
+    },
+    "hero": {
+      "title": "Aitebot Robotics Club",
+      "subtitle": "Innovation · Deployment · Industry Impact",
+      "ctaText": "Learn More",
+      "ctaHref": "#about",
+      "slides": [
+        {
+          "image": "./files/0000.jpg",
+          "alt": "Aitebot intelligent robot",
+          "gradient": "gradient-hero-1"
+        },
+        {
+          "image": "./files/0001.jpg",
+          "alt": "WallCraft construction robot",
+          "gradient": "gradient-hero-2"
+        },
+        {
+          "image": "./files/0002.jpg",
+          "alt": "AI and embodied intelligence",
+          "gradient": "gradient-hero-3"
+        }
+      ]
+    },
+    "projects": [
+      {
+        "image": "./files/0101.jpg",
+        "icon": "fa-building",
+        "tag": "Flagship",
+        "tagClass": "bg-primary/10 text-primary",
+        "title": "Artwall v1.0",
+        "description": "A compact concrete 3D-printing construction robot using digital-twin virtual axis tech for trackless multi-robot collaborative printing—works in most buildings and prints walls up to 3 meters high.",
+        "link": "#"
+      },
+      {
+        "image": "./files/0201.jpg",
+        "icon": "fa-android",
+        "tag": "Flagship",
+        "tagClass": "bg-blue-100 text-blue-600",
+        "title": "Mr.handy Smart Farmer",
+        "description": "An agricultural embodied AI robot for field inspection, crop harvesting, and pest control—modular payloads for diverse farming scenarios.",
+        "link": "#"
+      },
+      {
+        "image": "https://picsum.photos/600/400?cat",
+        "icon": "fa-paw",
+        "tag": "Tech Transfer",
+        "tagClass": "bg-purple-100 text-purple-600",
+        "title": "CatKanu",
+        "description": "An AI biomimetic companion robot combining playful interaction, smart companionship, and whole-home remote visual monitoring.",
+        "link": "#"
+      },
+      {
+        "image": "https://picsum.photos/600/400?library",
+        "icon": "fa-book",
+        "tag": "Tech Transfer",
+        "tagClass": "bg-purple-100 text-purple-600",
+        "title": "Smart Library Robot",
+        "description": "Detects, identifies, and re-shelves misplaced books with precise localization and robotic arm retrieval.",
+        "link": "#"
+      },
+      {
+        "image": "https://picsum.photos/600/400?laundry",
+        "icon": "fa-tint",
+        "tag": "Tech Transfer",
+        "tagClass": "bg-purple-100 text-purple-600",
+        "title": "Laundry Robot Arm",
+        "description": "An external smart frame for washer–dryer systems, enabling unified access and automated control.",
+        "link": "#"
+      }
+    ],
+    "news": [
+      {
+        "image": "https://picsum.photos/600/300?news1",
+        "icon": "fa-newspaper-o",
+        "date": "2026-04-08",
+        "title": "Aitebot Lab Project Handbook Released",
+        "summary": "The lab released its latest project handbook covering positioning, organization, and active projects.",
+        "link": "#"
+      },
+      {
+        "image": "https://picsum.photos/600/300?news2",
+        "icon": "fa-rocket",
+        "date": "2026-04-01",
+        "title": "CatKanu AI Companion Robot Project Launched",
+        "summary": "In collaboration with WUT’s School of Mechanical Engineering and School of Art & Design, building a stylish, intelligent home terminal.",
+        "link": "#"
+      },
+      {
+        "image": "https://picsum.photos/600/300?news3",
+        "icon": "fa-cogs",
+        "date": "2025-11-30",
+        "title": "Mr.handy Home Robot Project Approved",
+        "summary": "Aiming at the embodied AI wave to build WUT’s first full-size home robot.",
+        "link": "#"
+      }
+    ]
+  }
+}

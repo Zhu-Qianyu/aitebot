@@ -2,7 +2,7 @@
   "name": "aitebot",
   "version": "1.0.0",
   "private": true,
-  "description": "Aitebot | 爱特沃智能机器人俱乐部官网",
+  "description": "Aitebot | 爱特沃机器人俱乐部官网",
   "type": "module",
   "scripts": {
     "dev": "vite",
